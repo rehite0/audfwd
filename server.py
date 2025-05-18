@@ -12,8 +12,8 @@ def _list_device():
         print(i, p.get_device_info_by_index(i)["name"])
 
 def main():
-    s=sck.socket(sck.AF_BLUETOOTH, sck.SOCK_STREAM, sck.BTPROTO_RFCOMM)
-    s.bind((bt_mac, 4))
+    s=sck.socket(sck.AF_INET, sck.SOCK_STREAM)
+    s.bind((sck.gethostbyname(sck.gethostname()),5050))
     s.listen(1)
 
     
