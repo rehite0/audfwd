@@ -1,7 +1,7 @@
 import pyaudio as pa
 import socket as sck
 import time
-from pvt_conf.py import *
+from pvt_conf import *
 
 def callback(in_data, frame_count, time_info, status):
     client.send(in_data)
