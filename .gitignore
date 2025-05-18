@@ -1,3 +1,4 @@
+pvt_*
 *.wav
 tmp*
 # Byte-compiled / optimized / DLL files
