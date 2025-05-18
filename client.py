@@ -13,10 +13,9 @@ def _list_device():
 
 def main():
     c=sck.socket(sck.AF_INET, sck.SOCK_STREAM)
-    c.bind((server_ip,5050))
     while (1):
         try:
-            c.connect((bt_mac, 4))
+            c.connect((server_ip,5050))
 
             p = pa.PyAudio()
             stream = p.open(format=FORMAT,
