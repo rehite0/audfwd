@@ -3,8 +3,15 @@ import socket as sck
 import time
 from pvt_conf import *
 
+buff=b''
+c=None
 def callback(in_data, frame_count, time_info, status):
-    data=client.recv(CHUNK)
+    global buff
+    data=buff[:frame_count*CHANNELS*2]
+    buff=buff[frame_count*CHANNELS*2:]
+    #print(data,'\n\n')
+    #time.sleep(2)
+    #buff=buff[frame_count*CHANNELS*2:]
     return (data,pa.paContinue)
 
 def _list_device():
@@ -12,6 +19,7 @@ def _list_device():
         print(i, p.get_device_info_by_index(i)["name"])
 
 def main():
+    global c,buff
     c=sck.socket(sck.AF_INET, sck.SOCK_STREAM)
     while (1):
         try:
@@ -23,11 +31,11 @@ def main():
                         rate=RATE,
                         output=True,
                         stream_callback=callback)
-
             while stream.is_active():
-                time.sleep(1)
+                buff+=c.recv(100)
         except Exception as e:
             print(e)
+            raise e
         finally:
             stream.close()
             p.terminate()

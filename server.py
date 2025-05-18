@@ -3,8 +3,11 @@ import socket as sck
 import time
 from pvt_conf import *
 
+client =None
 def callback(in_data, frame_count, time_info, status):
+    #print(in_data)
     client.send(in_data)
+    #time.sleep(2)
     return (None,pa.paContinue)
 
 def _list_device():
@@ -13,11 +16,13 @@ def _list_device():
 
 def main():
     s=sck.socket(sck.AF_INET, sck.SOCK_STREAM)
+    print((sck.gethostbyname(sck.gethostname()),5050))
     s.bind((sck.gethostbyname(sck.gethostname()),5050))
-    s.listen(1)
+    s.listen(100)
 
     
     while (1):
+        global client
         client, addr =s.accept()
         try:
             p = pa.PyAudio()
